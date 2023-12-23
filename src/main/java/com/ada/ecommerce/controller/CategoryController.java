@@ -3,6 +3,7 @@ package com.ada.ecommerce.controller;
 import com.ada.ecommerce.entity.Category;
 import com.ada.ecommerce.services.CategoryService;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class CategoryController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Category> getById(@PathVariable Long id) {
+  public ResponseEntity<Category> getById(@PathVariable UUID id) {
     Category category = categoryService.getById(id);
     return ResponseEntity
         .status(HttpStatus.OK)

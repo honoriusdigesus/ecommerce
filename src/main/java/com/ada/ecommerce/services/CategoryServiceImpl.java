@@ -2,7 +2,9 @@ package com.ada.ecommerce.services;
 
 import com.ada.ecommerce.entity.Category;
 import com.ada.ecommerce.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class CategoryServiceImpl implements CategoryService {
     return categoryRepository.findAll();
   }
 
+
+
   @Override
-  public Category getById(Long id) {
+  public Category getById(UUID id) {
     return categoryRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Resource not found"));
+        .orElseThrow(() -> new EntityNotFoundException("Category not found"));
   }
 
 }

@@ -1,7 +1,9 @@
 package com.ada.ecommerce;
 
 import com.ada.ecommerce.entity.Category;
+import com.ada.ecommerce.entity.Product;
 import com.ada.ecommerce.repository.CategoryRepository;
+import com.ada.ecommerce.repository.ProductRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +18,10 @@ public class EcommerceApplication {
 	}
 
 	@Bean
-	public CommandLineRunner setData (CategoryRepository categoryRepository){
+	public CommandLineRunner setData (
+			CategoryRepository categoryRepository,
+			ProductRepository productRepository
+	){
 		return args -> {
 			Category category = new Category();
       category.setName("Laptops");
@@ -27,6 +32,16 @@ public class EcommerceApplication {
 			category2.setName("Mochila");
 			category2.setDescription("Soporta 100 Kg");
 			categoryRepository.save(category2);
+
+			Product product = new Product();
+			product.setName("Producto A");
+			product.setDescription("Descripción del producto A");
+			product.setStock(10);
+			product.setPrice(1500.0);
+			product.setImage_url("Http://imagen.com");
+			product.setActive(true);
+			product.setCategory(category);
+			productRepository.save(product);
     };
 	}
 }
