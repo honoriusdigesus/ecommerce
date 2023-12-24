@@ -2,8 +2,10 @@ package com.ada.ecommerce;
 
 import com.ada.ecommerce.entity.Category;
 import com.ada.ecommerce.entity.Product;
+import com.ada.ecommerce.entity.Role;
 import com.ada.ecommerce.repository.CategoryRepository;
 import com.ada.ecommerce.repository.ProductRepository;
+import com.ada.ecommerce.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +22,8 @@ public class EcommerceApplication {
 	@Bean
 	public CommandLineRunner setData (
 			CategoryRepository categoryRepository,
-			ProductRepository productRepository
+			ProductRepository productRepository,
+			RoleRepository roleRepository
 	){
 		return args -> {
 			Category category = new Category();
@@ -42,6 +45,18 @@ public class EcommerceApplication {
 			product.setActive(true);
 			product.setCategory(category);
 			productRepository.save(product);
-    };
+
+			Role role = new Role();
+			role.setName("ADMIN");
+			role.setDescription("Puede hacer modificaciones");
+
+			Role role1 = new Role();
+			role1.setName("USER");
+			role1.setDescription("No puede hacer modificaciones");
+
+			roleRepository.save(role1);
+			roleRepository.save(role);
+
+		};
 	}
 }
