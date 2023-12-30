@@ -42,4 +42,9 @@ public class ProductServiceImpl implements ProductService{
   public Page<Product> getProduct(Pageable pageable) {
     return productRepository.findAll(pageable);
   }
+
+  @Override
+  public Page<Product> getProductsFiltered(Double minPrice, Double maxPrice, Pageable pageable) {
+    return productRepository.findByPriceBetween(minPrice, maxPrice, pageable);
+  }
 }
