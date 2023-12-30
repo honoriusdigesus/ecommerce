@@ -18,7 +18,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 @Getter
 @Setter
 @Entity
-@Table
+@Table(name = "roles")
 
 public class Role {
   @Id

@@ -7,6 +7,8 @@ import com.ada.ecommerce.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -34,5 +36,10 @@ public class ProductServiceImpl implements ProductService{
   @Override
   public Product getById(UUID uuid) {
     return productRepository.findById(uuid).orElseThrow(() -> new EntityNotFoundException("Product not found"));
+  }
+
+  @Override
+  public Page<Product> getProduct(Pageable pageable) {
+    return productRepository.findAll(pageable);
   }
 }

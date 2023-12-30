@@ -19,7 +19,9 @@ public class EcommerceApplication {
 		SpringApplication.run(EcommerceApplication.class, args);
 	}
 
-	@Bean
+
+
+/*	@Bean
 	public CommandLineRunner setData (
 			CategoryRepository categoryRepository,
 			ProductRepository productRepository,
@@ -46,6 +48,19 @@ public class EcommerceApplication {
 			product.setCategory(category);
 			productRepository.save(product);
 
+
+			Product product2 = new Product();
+			product2.setName("Producto B");
+			product2.setDescription("Descripción del producto B");
+			product2.setStock(20);
+			product2.setPrice(1000.0);
+			product2.setImage_url("Http://imagen_b.com");
+			product2.setActive(true);
+			product2.setCategory(category);
+			productRepository.save(product2);
+
+
+
 			Role role = new Role();
 			role.setName("ADMIN");
 			role.setDescription("Puede hacer modificaciones");
@@ -58,5 +73,6 @@ public class EcommerceApplication {
 			roleRepository.save(role);
 
 		};
-	}
+	}*/
+
 }
