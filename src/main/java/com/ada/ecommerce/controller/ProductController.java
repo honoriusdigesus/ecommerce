@@ -1,5 +1,6 @@
 package com.ada.ecommerce.controller;
 
+import com.ada.ecommerce.dto.PageDTO;
 import com.ada.ecommerce.dto.ProductDTO;
 import com.ada.ecommerce.entity.Product;
 import com.ada.ecommerce.services.ProductService;
@@ -49,7 +50,7 @@ public class ProductController {
   }
 
   @GetMapping
-  public ResponseEntity<Page<Product>> getProductsFiltered(
+  public ResponseEntity<PageDTO<Product>> getProductsFiltered(
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "4") int size,
       @RequestParam(required = false) Double minPrice,
@@ -68,7 +69,7 @@ public class ProductController {
     Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortField);
     Pageable pageable = PageRequest.of(page, size, sort);
 
-    Page<Product> productPage = productService.getProductsFiltered(minPrice, maxPrice,pageable);
+    PageDTO<Product> productPage = productService.getProductsFiltered(minPrice, maxPrice,pageable);
     return ResponseEntity.status(HttpStatus.OK).body(productPage);
   }
 }

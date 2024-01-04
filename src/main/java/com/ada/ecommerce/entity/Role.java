@@ -24,8 +24,8 @@ public class Role {
   @Id
   @GeneratedValue
   @JdbcTypeCode(Types.VARCHAR)
+
   private UUID id;
-  @Column(length = 24, nullable = false, unique = true)
   private String name;
   private String description;
 
