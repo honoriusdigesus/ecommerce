@@ -1,5 +1,6 @@
 package com.ada.ecommerce.controller;
 
+import com.ada.ecommerce.dto.UserDTO;
 import com.ada.ecommerce.entity.User;
 import com.ada.ecommerce.services.UserService;
 import java.util.UUID;
@@ -18,8 +19,8 @@ public class UserController {
 
   private UserService userService;
   @GetMapping("/{id}")
-  public ResponseEntity<User> getById(@PathVariable UUID id){
-    User user = userService.getById(id);
+  public ResponseEntity<UserDTO> getById(@PathVariable UUID id){
+    UserDTO user = userService.getById(id);
     return ResponseEntity.status(HttpStatus.OK).body(user);
   }
 }
