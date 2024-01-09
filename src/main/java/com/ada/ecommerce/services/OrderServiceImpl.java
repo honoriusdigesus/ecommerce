@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     }).toList();
     order.setItems(items);
 
-    orderRepository.save(order);
-    return "Order saved successfully";
+    Order orderSaved = orderRepository.save(order);
+    return "Order saved successfully with id: " + orderSaved.getId();
   }
 }
