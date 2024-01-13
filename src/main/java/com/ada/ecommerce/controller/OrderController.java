@@ -21,18 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
   private OrderService orderService;
-  private OrderRepository orderRepository;
 
   @PostMapping
   private ResponseEntity<String> save(@RequestBody OrderDTO dto) {
     String returnMessage = orderService.save(dto);
     return ResponseEntity.status(HttpStatus.CREATED).body(returnMessage);
   }
-
+/*
   @GetMapping("/{id}/price/total")
   public String getTotalPrice(@PathVariable UUID id) {
     double total = orderRepository.getTotalPriceByOrderId(id.toString());
     double total2 = orderRepository.getTotalPrice(id);
-    return "Query nativa " + total + "JQPL " + total2;
+    return "Query nativa " + total + " JQPL " + total2;
+  }*/
+
+  @GetMapping("/{uuid}")
+  public ResponseEntity<OrderDTO> getById(@PathVariable UUID uuid){
+    OrderDTO order = orderService.getById(uuid);
+    return ResponseEntity.status(HttpStatus.OK).body(order);
   }
 }
