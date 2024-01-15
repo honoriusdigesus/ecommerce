@@ -27,4 +27,10 @@ public class UserServiceImpl implements UserService{
     userDTO.setRoleName(user.getRole().getName());
     return userDTO;
   }
+
+  @Override
+  public boolean existByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
 }

@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public OrderDTO getById(UUID uuid) {
-    Order order = orderRepository.findById(uuid).orElseThrow(()->new EntityNotFoundException("Order not foundaaaaaaaaaaaaa"));
+    Order order = orderRepository.findById(uuid).orElseThrow(()->new EntityNotFoundException("Order not found"));
 
     OrderDTO orderDTO = new OrderDTO();
     orderDTO.setComment(order.getComment());

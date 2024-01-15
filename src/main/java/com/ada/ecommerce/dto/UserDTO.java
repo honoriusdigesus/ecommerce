@@ -1,6 +1,8 @@
 package com.ada.ecommerce.dto;
 
 import com.ada.ecommerce.entity.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +21,6 @@ public class UserDTO {
   private String email;
   private String address;
   private String roleName;
-
+  @JsonProperty(access = Access.READ_ONLY)
+  private String password;
 }
