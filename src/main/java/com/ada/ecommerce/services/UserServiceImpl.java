@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService{
     return userRepository.existsByEmail(email);
   }
 
+  @Override
+  public User save(User user) {
+    return userRepository.save(user);
+  }
+
 }

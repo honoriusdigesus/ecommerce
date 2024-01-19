@@ -21,6 +21,6 @@ public class UserDTO {
   private String email;
   private String address;
   private String roleName;
-  @JsonProperty(access = Access.READ_ONLY)
+  @JsonProperty(access = Access.WRITE_ONLY)
   private String password;
 }
