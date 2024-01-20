@@ -1,4 +1,4 @@
-package com.ada.ecommerce;
+ package com.ada.ecommerce;
 
 import com.ada.ecommerce.entity.Category;
 import com.ada.ecommerce.entity.Product;
