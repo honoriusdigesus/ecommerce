@@ -37,6 +37,7 @@ public class User {
   private String password;
 
   private String address;
+  private Boolean enable= false;
 
   @ManyToOne
   @JoinColumn(name = "role_id")

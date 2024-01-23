@@ -10,15 +10,15 @@ import jakarta.persistence.Table;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "confirmation_tokens")
 public class ConfirmationToken {
   @Id
@@ -47,5 +47,6 @@ public class ConfirmationToken {
     this.expiresAt = expiresAt;
     this.user = user;
   }
+
 
 }

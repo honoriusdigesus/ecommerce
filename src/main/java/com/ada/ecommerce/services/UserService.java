@@ -7,6 +7,8 @@ import java.util.UUID;
 public interface UserService {
   UserDTO getById(UUID uuid);
   boolean existByEmail(String email);
-  User save(User user);;
+  User save(User user);
+
+  void enableUser(User user);
 
 }
