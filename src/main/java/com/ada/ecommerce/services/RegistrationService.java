@@ -1,5 +1,6 @@
 package com.ada.ecommerce.services;
 
+import com.ada.ecommerce.dto.EmailNotificationDTO;
 import com.ada.ecommerce.dto.UserDTO;
 import com.ada.ecommerce.entity.ConfirmationToken;
 import com.ada.ecommerce.entity.User;
@@ -7,6 +8,9 @@ import com.ada.ecommerce.exception.EmailAlreadyTaken;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import com.ada.ecommerce.util.TemplateGenerator;
+import com.ada.ecommerce.util.UrlGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,7 @@ public class RegistrationService {
 
   private UserService userService;
   private ConfirmationTokenService confirmationTokenService;
+  private EmailService emailService;
 
   public String register(UserDTO userDTO) {
     boolean existEmail = userService.existByEmail(userDTO.getEmail());
@@ -36,6 +41,17 @@ public class RegistrationService {
     confirmationTokenService.save(confirmationToken);
 
     //TODO: Send email eith confirmation token
+    String url = UrlGenerator.create("/auth/confirm", "token", token);
+    String template = TemplateGenerator.generateTemplateConfirmationToken(userSaved.getFirstName(),url);
+    EmailNotificationDTO email = EmailNotificationDTO
+            .builder()
+            .to(userSaved.getEmail())
+            .subject("Account confirmation")
+            .body(template)
+            .hasTemplate(true)
+            .build();
+    emailService.send(email);
+
     return "User registered siccessfully with id: " + userSaved.getId() ;
   }
 }
