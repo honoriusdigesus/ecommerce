@@ -9,8 +9,8 @@ INSERT INTO roles (id, name, description) VALUES ('86791af0-92ed-4d10-945b-9356b
 INSERT INTO roles (id, name, description) VALUES ('2efe839d-817d-420f-bfb7-bb7028d8258d','ADMIN','Role admin') ON CONFLICT (id) DO NOTHING;
 
 --Users--
-INSERT INTO users (id, first_name, last_name, email, password, address, role_id) VALUES ('2bc4863a-7dd1-49b2-8bf0-f26d3f7fecfd','Honorius di Gesus','Jaramillo Ortega','Honoriusdigesus@user.com','abc123','CR66BB#56B26','86791af0-92ed-4d10-945b-9356b8bf73ac') ON CONFLICT (id) DO NOTHING;
-INSERT INTO users (id, first_name, last_name, email, password, address, role_id) VALUES ('53a0bd0b-4b1f-4ac8-8b3e-5e1fd0641a0d','Salomé di Gesus','Jaramillo Moscote','SalomeMoscote@admin.com','abc1234','Tunja','2efe839d-817d-420f-bfb7-bb7028d8258d') ON CONFLICT (id) DO NOTHING;
+INSERT INTO users (id, first_name, last_name, email, password, address, role_id, enable) VALUES ('2bc4863a-7dd1-49b2-8bf0-f26d3f7fecfd','Honorius di Gesus','Jaramillo Ortega','Honoriusdigesus@user.com','abc123','CR66BB#56B26','86791af0-92ed-4d10-945b-9356b8bf73ac', true) ON CONFLICT (id) DO NOTHING;
+INSERT INTO users (id, first_name, last_name, email, password, address, role_id, enable) VALUES ('53a0bd0b-4b1f-4ac8-8b3e-5e1fd0641a0d','Salomé di Gesus','Jaramillo Moscote','SalomeMoscote@admin.com','abc1234','Tunja','2efe839d-817d-420f-bfb7-bb7028d8258d', true) ON CONFLICT (id) DO NOTHING;
 
 -- Products --
 INSERT INTO products (id, name, description, image_url, price, stock, active, category_id) VALUES ('bcbed0d0-ce17-4a9a-81ec-40a8bcd9f018','Producto A','Descripción del producto A', 'www.productoA.com',1100.0, 100, true,'585b3cd5-6e96-4ce7-b386-a92fe9a56399');
