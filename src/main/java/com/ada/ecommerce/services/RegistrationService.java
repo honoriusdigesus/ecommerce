@@ -3,6 +3,7 @@ package com.ada.ecommerce.services;
 import com.ada.ecommerce.dto.EmailNotificationDTO;
 import com.ada.ecommerce.dto.UserDTO;
 import com.ada.ecommerce.entity.ConfirmationToken;
+import com.ada.ecommerce.entity.Role;
 import com.ada.ecommerce.entity.User;
 import com.ada.ecommerce.exception.EmailAlreadyTaken;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 import com.ada.ecommerce.util.TemplateGenerator;
 import com.ada.ecommerce.util.UrlGenerator;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,26 +24,31 @@ public class RegistrationService {
     private UserService userService;
     private ConfirmationTokenService confirmationTokenService;
     private EmailService emailService;
+    private PasswordEncoder passwordEncoder;
+    private RoleService roleService;
 
     public String register(UserDTO userDTO) {
         boolean existEmail = userService.existByEmail(userDTO.getEmail());
         if (existEmail) {
             throw new EmailAlreadyTaken(userDTO.getEmail());
         }
-        //TODO: Encrypt password
+
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setAddress(userDTO.getAddress());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+        user.setPassword(encryptedPassword);
+        Role defaultRole = roleService.getByName("USER");
+        user.setRole(defaultRole);
         User userSaved = userService.save(user);
 
         String token = UUID.randomUUID().toString();
         ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now().plusMinutes(15), userSaved);
         confirmationTokenService.save(confirmationToken);
 
-        //TODO: Send email eith confirmation token
+
         String url = UrlGenerator.create("/auth/confirm", "token", token);
         String template = TemplateGenerator.generateTemplateConfirmationToken(userSaved.getFirstName(), url);
         EmailNotificationDTO email = EmailNotificationDTO

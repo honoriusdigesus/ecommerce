@@ -1,7 +1,10 @@
 package com.ada.ecommerce.controller;
 
+import com.ada.ecommerce.dto.AuthenticationRequestDTO;
+import com.ada.ecommerce.dto.AuthenticationResponse;
 import com.ada.ecommerce.dto.EmailNotificationDTO;
 import com.ada.ecommerce.dto.UserDTO;
+import com.ada.ecommerce.services.AuthenticationService;
 import com.ada.ecommerce.services.EmailService;
 import com.ada.ecommerce.services.RegistrationService;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private RegistrationService registrationService;
     private EmailService emailService;
+    private AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
@@ -35,5 +39,11 @@ public class AuthController {
     public ResponseEntity<String> confirm (@RequestParam String token){
         String message = registrationService.confirm(token);
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequestDTO request){
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
