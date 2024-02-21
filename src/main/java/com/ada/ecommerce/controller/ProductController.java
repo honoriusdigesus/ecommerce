@@ -5,6 +5,8 @@ import com.ada.ecommerce.dto.ProductDTO;
 import com.ada.ecommerce.entity.Product;
 import com.ada.ecommerce.services.ProductService;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.hibernate.query.SortDirection;
 import org.springframework.data.domain.Page;
@@ -29,7 +31,7 @@ public class ProductController {
   private final ProductService productService;
 
   @PostMapping
-  public ResponseEntity<Product> save(@RequestBody ProductDTO productDTO) {
+  public ResponseEntity<Product> save(@RequestBody @Valid ProductDTO productDTO) {
     Product product = productService.save(productDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(product);
   }

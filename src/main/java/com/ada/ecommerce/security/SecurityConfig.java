@@ -23,6 +23,7 @@ public class SecurityConfig {
         http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(auth ->{ auth
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/products/**").permitAll()
                 .anyRequest().authenticated();
         });
         //http.httpBasic(Customizer.withDefaults());

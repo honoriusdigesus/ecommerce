@@ -1,12 +1,19 @@
 package com.ada.ecommerce.exception;
 
 import com.ada.ecommerce.exception.response.ErrorResponse;
+import com.ada.ecommerce.exception.response.FieldErrorModel;
+import com.ada.ecommerce.exception.response.ValidationErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.List;
 
 @ControllerAdvice
 public class ErrorHandler {
@@ -38,7 +45,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(Exception ex){
-        HttpStatus status = HttpStatus.FORBIDDEN;
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         ErrorResponse error = ErrorResponse.builder()
                 .code(status.value())
                 .error(status.name())
@@ -47,5 +54,26 @@ public class ErrorHandler {
         return ResponseEntity
                 .status(status)
                 .body(error);
+    }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        List<FieldErrorModel> errors = ex.getBindingResult().getAllErrors().stream().map(fieldError -> {
+            FieldErrorModel fieldErrorModel = new FieldErrorModel();
+            fieldErrorModel.setField(((FieldError)fieldError).getField());
+            fieldErrorModel.setMessage(fieldError.getDefaultMessage());
+            fieldErrorModel.setCode(fieldError.getCode());
+            return fieldErrorModel;
+        }).toList();
+        ValidationErrorResponse response = new ValidationErrorResponse();
+        response.setCode(status.value());
+        response.setError(status.name());
+        response.setErrors(errors);
+
+        return ResponseEntity
+                .status(status)
+                .body(response);
     }
 }
