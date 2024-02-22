@@ -7,6 +7,8 @@ import com.ada.ecommerce.dto.UserDTO;
 import com.ada.ecommerce.services.AuthenticationService;
 import com.ada.ecommerce.services.EmailService;
 import com.ada.ecommerce.services.RegistrationService;
+import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("auth")
 @AllArgsConstructor
+
 public class AuthController {
     private RegistrationService registrationService;
     private EmailService emailService;
@@ -26,6 +29,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
+    @Hidden
     @PostMapping("/email")
     public String sendEmail() {
         EmailNotificationDTO email = EmailNotificationDTO.builder().to("honoriusdigesus@gmail.com").subject("Prueba").body("Este es un correo de prueba enviado desde Spring").hasTemplate(false).build();
@@ -42,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequestDTO request){
+    public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody @Valid AuthenticationRequestDTO request){
         AuthenticationResponse response = authenticationService.authenticate(request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

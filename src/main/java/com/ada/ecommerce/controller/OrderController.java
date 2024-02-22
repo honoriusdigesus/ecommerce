@@ -4,6 +4,8 @@ import com.ada.ecommerce.dto.OrderDTO;
 import com.ada.ecommerce.repository.OrderRepository;
 import com.ada.ecommerce.services.OrderService;
 import java.util.UUID;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("orders")
 @AllArgsConstructor
+@SecurityRequirement(name = "BearerAuth")
 public class OrderController {
 
   private OrderService orderService;

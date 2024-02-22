@@ -1,5 +1,6 @@
 package com.ada.ecommerce.dto;
 
+import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthenticationRequestDTO {
-    private String email, password;
+    @Email
+    private String email;
+    private String password;
 }
