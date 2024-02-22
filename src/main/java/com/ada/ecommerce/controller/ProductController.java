@@ -37,7 +37,8 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @Hidden
+
+    @Operation(summary = "Save a new product")
     @PostMapping
     public ResponseEntity<Product> save(@RequestBody @Valid ProductDTO productDTO) {
         Product product = productService.save(productDTO);

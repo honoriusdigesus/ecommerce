@@ -4,6 +4,7 @@ import com.ada.ecommerce.security.jwt.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,6 +36,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth ->{ auth
                 .requestMatchers(SWAGGER_WHITE_LIST).permitAll()
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/orders").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/orders/**").hasAnyAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         });
         //http.httpBasic(Customizer.withDefaults());
